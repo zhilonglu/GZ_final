@@ -66,13 +66,15 @@ def writeLink():
 def readMape():
     writeLink()
     html_dict = {}
+    link_id = []
     with open(path + "link_value.csv") as f:
         lines = f.readlines()
         for line in lines:
             link = line.split(":")[0]
             value = line.split(":")[1][0:-2]
             html_dict[link] = value
-    return html_dict
+            link_id.append(link)
+    return html_dict,link_id
 def changeFile():#修改文件的后缀
     li=os.listdir(dirName)
     for filename in li:
@@ -85,16 +87,26 @@ def changeFile():#修改文件的后缀
             newname = dirName+newname
             os.rename(filename,newname)
 def writeHTML():
-    html_dict = readMape()
-    for link in html_dict:
-        with open(dirName + link+".txt", "w") as f1:
+    html_dict,link_id = readMape()
+    for index in range(len(link_id)):
+        with open(dirName + link_id[index]+".txt", "w") as f1:
             with open(path+"sample.txt") as f2:
                 all = f2.readlines()
                 for line in all:
+                    if "pre" in line:
+                        try:
+                            line = "<a href=\""+link_id[index-1]+".html\">pre</a>"
+                        except:
+                            line = "<a href=\"" + link_id[index] + ".html\">pre</a>"
+                    if "next" in line:
+                        try:
+                            line = "<a href=\""+link_id[index+1]+".html\">next</a>"
+                        except:
+                            line = "<a href=\"" + link_id[index] + ".html\">next</a>"
                     if "var data" in line:
-                        line = "var data="+"["+html_dict[link]+"]"
+                        line = "var data="+"["+html_dict[link_id[index]]+"]"
                     elif "text:" in line:
-                        line = "text:"+"'"+link+"',"
+                        line = "text:"+"'"+link_id[index]+"',"
                     f1.write(line+"\n")
 if __name__ == '__main__':
     writeHTML()

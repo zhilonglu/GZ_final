@@ -1,0 +1,9 @@
+{
+	"datapath":"C:\\Users\\NLSDE\\Desktop\\icdm\\tables\\",
+	"sharepath":"C:\\Users\\NLSDE\\Desktop\\gz\\result\\",
+	"rootpath":"E:\\traveltime\\for200k\\zhong\\tensor\\",
+	"tensorfile":"tensor_fill.csv",
+	"startdate":"2017-07-01",
+	"starthour":"08:00:00",
+	"days":15
+}

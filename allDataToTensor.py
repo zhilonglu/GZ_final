@@ -11,12 +11,16 @@ def initVariable():
     linkid = []
     timeMin = {}
     #day
-    startDay = datetime.datetime.strptime("2016-07-01", "%Y-%m-%d")
-    for i in range(0,31,1):
+    startDay = datetime.datetime.strptime("2016-03-01", "%Y-%m-%d")
+    for i in range(0,92,1):
         endDay = startDay + datetime.timedelta(days=i)
         timeDay.append(datetime.datetime.strftime(endDay,"%Y-%m-%d"))
-    startDay = datetime.datetime.strptime("2017-04-01", "%Y-%m-%d")
-    for i in range(0, 122, 1):
+    startDay = datetime.datetime.strptime("2016-07-01", "%Y-%m-%d")
+    for i in range(0, 31, 1):
+        endDay = startDay + datetime.timedelta(days=i)
+        timeDay.append(datetime.datetime.strftime(endDay, "%Y-%m-%d"))
+    startDay = datetime.datetime.strptime("2017-03-01", "%Y-%m-%d")
+    for i in range(0, 153, 1):
         endDay = startDay + datetime.timedelta(days=i)
         timeDay.append(datetime.datetime.strftime(endDay, "%Y-%m-%d"))
     #min
@@ -42,7 +46,7 @@ def initVariable():
         for line in lines:
             attrs = line.split(";")
             linkid.append(attrs[0])
-    print(timeDay)
+    # print(timeDay)
     return timeMin,linkid,timeDay,linkid
 def readData(infile,tm):
     timeMin, linkid, timeDay, linkid = initVariable()
@@ -77,10 +81,10 @@ def fileTotesnor_first(linkid,timeMin,data_dir,tm):
         for k in sortedList:
             tempList.append(k[1])
         outTensor[i[0]].append((i[1],tempList))
-    if not os.path.exists(path+"tensorData1\\"):
-        os.mkdir(path+"tensorData1\\")
+    if not os.path.exists(path+"tensorDataAll\\"):
+        os.mkdir(path+"tensorDataAll\\")
     for i in outTensor:
-        outputPath = path+"tensorData1\\"+str(i)
+        outputPath = path+"tensorDataAll\\"+str(i)
         if not os.path.exists(outputPath):
             os.mkdir(outputPath)
         sortedList = sorted(outTensor[i])
@@ -142,8 +146,8 @@ def findMinExceptZero(a):
 if __name__ == '__main__':
     initVariable()
     for tm in timeInterval:
-        linkid, timeMin, data_dir = readData("quaterfinal_gy_cmp_training_traveltime.txt",tm)
+        linkid, timeMin, data_dir = readData("allTrainData.csv",tm)
         fileTotesnor_first(linkid,timeMin,data_dir,tm)
-        tensorpath = path + "tensorData1\\"
-        fillupFirst(tensorpath, tm)
-        fillupSecond(tensorpath, tm)
+        tensorpath = path+"tensorDataAll\\"
+        fillupFirst(tensorpath,tm)
+        fillupSecond(tensorpath,tm)
