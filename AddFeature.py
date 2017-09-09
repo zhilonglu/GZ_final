@@ -8,8 +8,8 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn import preprocessing
-# path = "C:\\Users\\NLSDE\\Desktop\\gz\\tensorDataAll\\"
-path = "C:\\Users\\NLSDE\\Desktop\\gz\\tensorData1\\"
+# path = "C:\\Users\\NLSDE\\Desktop\\gz\\tensorDataAll\\"   #同时记得修改数据，这是线下的数据
+path = "C:\\Users\\NLSDE\\Desktop\\gz\\tensorData1\\" #同时记得修改日期，这只是线上的数据
 rootpath = "C:\\Users\\NLSDE\\Desktop\\gz\\"
 timeInterval = ['zao','zhong','wan']
 timeDay = []
@@ -58,19 +58,28 @@ def addFeature():
 def mergrAllFile():
     files = os.listdir(path)
     for tm in timeInterval:
-        with open(rootpath + "\\tensor_fill_" + tm + "_link_all.csv","w") as f1:
+        with open(rootpath + "\\tensor_fill_" + tm + "_all.csv", "w") as f1:
             for file in files:
-                with open(path + file + "\\tensor_fill_" + tm + "_link.csv") as f:
+                with open(path + file + "\\tensor_fill_" + tm + ".csv") as f:
                     lines = f.readlines()
+                    idx = 0
                     for line in lines:
-                        f1.write(line)
+                        f1.write(file+","+timeDay[idx]+","+line)
+                        idx += 1
                 f.close()
-        with open(rootpath + "\\tensor_fill_" + tm + "_fe_all.csv","w") as f2:
-            for file in files:
-                with open(path + file + "\\tensor_fill_" + tm + "_fe.csv") as f:
-                    lines = f.readlines()
-                    for line in lines:
-                        f2.write(line)
-                f.close()
+        # with open(rootpath + "\\AllDatatensor_fill_" + tm + "_link_all.csv","w") as f2:
+        #     for file in files:
+        #         with open(path + file + "\\tensor_fill_" + tm + "_link.csv") as f:
+        #             lines = f.readlines()
+        #             for line in lines:
+        #                 f2.write(line)
+        #         f.close()
+        # with open(rootpath + "\\AllDatatensor_fill_" + tm + "_fe_all.csv","w") as f3:
+        #     for file in files:
+        #         with open(path + file + "\\tensor_fill_" + tm + "_fe.csv") as f:
+        #             lines = f.readlines()
+        #             for line in lines:
+        #                 f3.write(line)
+        #         f.close()
 if __name__ == '__main__':
     mergrAllFile()
