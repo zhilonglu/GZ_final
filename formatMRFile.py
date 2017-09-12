@@ -26,7 +26,7 @@ def splitSeg(input_file):
 
 if __name__ == '__main__':
     # input_file = ["bpv2_zao","bpv2_zhong","bpv2_wan"]
-    input_file = ["knn_link_zao909","knn_link_zhong909","knn_link_wan909"]
+    input_file = ["sv_bpv2_zao_seg1","sv_bpv2_zhong_seg1","sv_bpv2_wan_seg1"]
     changeFormat(input_file)
-    splitSeg(input_file)
+    # splitSeg(input_file)
 
